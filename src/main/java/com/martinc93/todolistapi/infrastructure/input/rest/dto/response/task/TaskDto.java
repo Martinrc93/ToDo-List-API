@@ -1,6 +1,6 @@
-package com.martinc93.todolistapi.task.infrastructure.input.dto;
+package com.martinc93.todolistapi.infrastructure.input.rest.dto.response.task;
 
-import com.martinc93.todolistapi.task.domain.model.TaskStatus;
+import com.martinc93.todolistapi.domain.model.task.vo.TaskStatus;
 
 import java.time.LocalDateTime;
 
