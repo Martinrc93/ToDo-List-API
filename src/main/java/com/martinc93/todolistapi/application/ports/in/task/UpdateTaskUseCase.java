@@ -1,0 +1,4 @@
+package com.martinc93.todolistapi.application.ports.in.task;
+
+public interface UpdateTaskUseCase {
+}
