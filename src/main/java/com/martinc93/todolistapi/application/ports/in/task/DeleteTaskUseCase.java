@@ -1,3 +1,7 @@
 package com.martinc93.todolistapi.application.ports.in.task;
+
+import com.martinc93.todolistapi.domain.model.task.Task;
+
 public interface DeleteTaskUseCase {
+    Task exucute (Task task);
 }

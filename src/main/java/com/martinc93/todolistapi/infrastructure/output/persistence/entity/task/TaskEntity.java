@@ -6,33 +6,40 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tasks")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class TaskEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(length = 50, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",insertable = false, updatable = false)
+    private UserEntity user;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column()//length = 50, nullable = false
     private String title;
 
-    @Column(length = 255, nullable = false)
+    @Column()//length = 255, nullable = false)
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column()//nullable = false
     private TaskStatus status;
 
-    @Column(name = "created", nullable = false)
+    @Column(name = "created") //, nullable = false, updatable = false
     private LocalDateTime createdAt;
 
     @Column(name = "updated")

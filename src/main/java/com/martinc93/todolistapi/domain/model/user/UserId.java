@@ -1,9 +1,7 @@
 package com.martinc93.todolistapi.domain.model.user;
 
-import java.util.UUID;
-
 public record UserId(
-        UUID value
+        Long value
 ){
     public UserId {
         if (value == null) {

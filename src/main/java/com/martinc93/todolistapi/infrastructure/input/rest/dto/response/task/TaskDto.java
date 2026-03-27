@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 public record TaskDto(
         Long id,
+        Long userId,
+        String title,
         String description,
         TaskStatus status,
         LocalDateTime createdAt,

@@ -1,27 +1,25 @@
 package com.martinc93.todolistapi.domain.model.task;
 
 import com.martinc93.todolistapi.domain.model.task.vo.TaskStatus;
-import com.martinc93.todolistapi.domain.model.user.UserId;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
-@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Task {
 
-    private UUID id;
+    private Long id;
 
-    private UUID userId;
-
-    private String description;
+    private Long userId;
 
     private String title;
+
+    private String description;
 
     private TaskStatus status;
 
@@ -29,6 +27,17 @@ public class Task {
 
     private LocalDateTime updatedAt;
 
+    public static Task create(Long userId,String title, String description) {
+        Task task = new Task();
+        task.userId = userId;
+        task.title = title;
+        task.description = description;
+        task.status = TaskStatus.PENDING;
+        task.createdAt = LocalDateTime.now();
+        task.updatedAt = LocalDateTime.now();
+
+        return task;
+    }
     /*
     public void assignToUser(UUID userId){
         if (userId != null){

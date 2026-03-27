@@ -7,7 +7,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    TaskEntity toEntity(Task domain);
+    //@Mapping(source = "userId" , target = "user")
+    TaskEntity toEntity(Task task);
 
     Task toDomain(TaskEntity entity);
 

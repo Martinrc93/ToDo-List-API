@@ -9,30 +9,40 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class TaskRepositoryAdaptar implements TaskRepositoryPort {
+public class TaskRepositoryAdapter implements TaskRepositoryPort {
 
     private final TaskRepository taskRepository;
-    //private final UserRepository userRepository;
     private final TaskMapper taskMapper;
 
     @Override
     public Task save(Task task) {
-        return null;
-    }
-/*
-    @Override
-    public Optional<TaskEntity> findById(UUID id) {
-        return taskRepository.findById(id);
+        TaskEntity entity = taskMapper.toEntity(task);
+
+        return taskMapper.toDomain(taskRepository.save(entity));
     }
 
- */
+    @Override
+    public Task findById(Long id) {
+        Optional<TaskEntity> entity = taskRepository.findById(id);
+        return entity.map(taskMapper::toDomain).orElse(null);
+    }
 
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll().stream().map(taskMapper::toDomain).toList();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        taskRepository.deleteById(id);
+    }
+
+    @Override
+    public Task update(Task task) {
+        TaskEntity entity = taskMapper.toEntity(task);
+        return taskMapper.toDomain(taskRepository.save(entity));
     }
 }
