@@ -4,6 +4,8 @@ import com.martinc93.todolistapi.application.ports.in.task.GetTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class GetTaskService implements GetTaskUseCase {
     }
 
     @Override
-    public List<Task> getAll() {
-        return taskRepositoryPort.findAll();
+    public Page<Task> getAll(Pageable pageable) {
+        return taskRepositoryPort.findAll(pageable);
     }
 }

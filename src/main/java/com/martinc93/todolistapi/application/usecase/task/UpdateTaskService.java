@@ -1,5 +1,6 @@
 package com.martinc93.todolistapi.application.usecase.task;
 
+import com.martinc93.todolistapi.application.ports.in.task.UpdateTaskCommand;
 import com.martinc93.todolistapi.application.ports.in.task.UpdateTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
@@ -13,7 +14,17 @@ public class UpdateTaskService implements UpdateTaskUseCase {
     private final TaskRepositoryPort taskRepositoryPort;
 
     @Override
-    public Task exucute(Task task) {
+    public Task exucute(UpdateTaskCommand command) {
+
+        taskRepositoryPort.findById(command.id());
+
+        Task task = Task.update(
+                command.id(),
+                command.title(),
+                command.description(),
+                command.status()
+        );
+
         return taskRepositoryPort.update(task);
     }
 }

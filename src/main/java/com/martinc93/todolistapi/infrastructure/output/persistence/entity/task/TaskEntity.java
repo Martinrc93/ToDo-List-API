@@ -29,27 +29,20 @@ public class TaskEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column()//length = 50, nullable = false
+    @Column(length = 50, nullable = false)
     private String title;
 
-    @Column()//length = 255, nullable = false)
+    @Column(length = 255, nullable = false)
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column()//nullable = false
+    @Column()
     private TaskStatus status;
 
-    @Column(name = "created") //, nullable = false, updatable = false
+    @Column(name = "created", nullable = false, updatable = false) //,
     private LocalDateTime createdAt;
 
     @Column(name = "updated")
     private LocalDateTime updatedAt;
-
-    /*
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
-     */
 
 }

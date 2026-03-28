@@ -38,6 +38,17 @@ public class Task {
 
         return task;
     }
+
+    public static Task update(Long id, String title, String description, TaskStatus status){
+        Task task = new Task();
+        task.id = id;
+        task.title = title;
+        task.description = description;
+        task.status = status;
+        task.updatedAt = LocalDateTime.now();
+
+        return task;
+    }
     /*
     public void assignToUser(UUID userId){
         if (userId != null){

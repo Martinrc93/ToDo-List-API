@@ -13,8 +13,7 @@ public class DeleteTaskService implements DeleteTaskUseCase {
     private final TaskRepositoryPort taskRepositoryPort;
 
     @Override
-    public Task exucute(Task task) {
-        taskRepositoryPort.deleteById(task.getId());
-        return task;
+    public void exucute(Long id) {
+        taskRepositoryPort.deleteById(id);
     }
 }

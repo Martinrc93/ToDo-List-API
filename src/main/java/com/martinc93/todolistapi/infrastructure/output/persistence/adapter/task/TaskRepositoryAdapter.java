@@ -5,6 +5,8 @@ import com.martinc93.todolistapi.domain.model.task.Task;
 import com.martinc93.todolistapi.infrastructure.output.persistence.entity.task.TaskEntity;
 import com.martinc93.todolistapi.infrastructure.output.persistence.mapper.task.TaskMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,8 +33,9 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
     }
 
     @Override
-    public List<Task> findAll() {
-        return taskRepository.findAll().stream().map(taskMapper::toDomain).toList();
+    public Page<Task> findAll(Pageable pageable) {
+        Page<TaskEntity> tasks = taskRepository.findAll(pageable);
+        return tasks.map(taskMapper::toDomain);
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.martinc93.todolistapi.application.ports.in.task;
 
 import com.martinc93.todolistapi.domain.model.task.Task;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface GetTaskUseCase {
 
     Task getById(Long id);
 
-    List<Task> getAll();
+    Page<Task> getAll(Pageable pageable);
 
 }
