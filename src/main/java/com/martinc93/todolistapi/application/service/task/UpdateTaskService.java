@@ -1,7 +1,7 @@
-package com.martinc93.todolistapi.application.usecase.task;
+package com.martinc93.todolistapi.application.service.task;
 
-import com.martinc93.todolistapi.application.ports.in.task.UpdateTaskCommand;
-import com.martinc93.todolistapi.application.ports.in.task.UpdateTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.command.UpdateTaskCommand;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.UpdateTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
 import lombok.RequiredArgsConstructor;

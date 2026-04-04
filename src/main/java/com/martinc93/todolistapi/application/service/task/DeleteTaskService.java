@@ -1,8 +1,7 @@
-package com.martinc93.todolistapi.application.usecase.task;
+package com.martinc93.todolistapi.application.service.task;
 
-import com.martinc93.todolistapi.application.ports.in.task.DeleteTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.DeleteTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
-import com.martinc93.todolistapi.domain.model.task.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.martinc93.todolistapi.application.ports.in.task;
+package com.martinc93.todolistapi.application.ports.in.task.command;
 
 public record CreateTaskCommand(
         Long userId,

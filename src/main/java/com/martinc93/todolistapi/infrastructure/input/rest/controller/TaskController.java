@@ -1,7 +1,10 @@
 package com.martinc93.todolistapi.infrastructure.input.rest.controller;
 
-import com.martinc93.todolistapi.application.ports.in.task.*;
-import com.martinc93.todolistapi.application.usecase.task.CreateTaskService;
+import com.martinc93.todolistapi.application.ports.in.task.command.UpdateTaskCommand;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.DeleteTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.GetTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.UpdateTaskUseCase;
+import com.martinc93.todolistapi.application.service.task.CreateTaskService;
 import com.martinc93.todolistapi.domain.model.task.Task;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.CreateTaskRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.UpdateTaskRequestDto;

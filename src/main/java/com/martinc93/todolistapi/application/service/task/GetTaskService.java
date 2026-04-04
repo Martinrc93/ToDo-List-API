@@ -1,14 +1,12 @@
-package com.martinc93.todolistapi.application.usecase.task;
+package com.martinc93.todolistapi.application.service.task;
 
-import com.martinc93.todolistapi.application.ports.in.task.GetTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.GetTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service

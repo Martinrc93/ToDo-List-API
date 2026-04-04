@@ -1,7 +1,7 @@
-package com.martinc93.todolistapi.application.usecase.task;
+package com.martinc93.todolistapi.application.service.task;
 
-import com.martinc93.todolistapi.application.ports.in.task.CreateTaskCommand;
-import com.martinc93.todolistapi.application.ports.in.task.CreateTaskUseCase;
+import com.martinc93.todolistapi.application.ports.in.task.command.CreateTaskCommand;
+import com.martinc93.todolistapi.application.ports.in.task.usecase.CreateTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
 import com.martinc93.todolistapi.application.ports.out.user.UserRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 public class CreateTaskService implements CreateTaskUseCase {
 
     private final TaskRepositoryPort taskRepositoryPort;
-    private final UserRepositoryPort userRepositoryPort;
 
     @Override
     @Transactional
     public Task execute(CreateTaskCommand command) {
 
-        userRepositoryPort.findById(command.userId());
+
+        //taskRepositoryPort.findById(command.userId());
 
         Task task = Task.create(
                 command.userId(),

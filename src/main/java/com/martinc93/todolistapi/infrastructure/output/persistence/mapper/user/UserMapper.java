@@ -3,12 +3,17 @@ package com.martinc93.todolistapi.infrastructure.output.persistence.mapper.user;
 import com.martinc93.todolistapi.domain.model.user.User;
 import com.martinc93.todolistapi.infrastructure.output.persistence.entity.user.UserEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    User ToUser (UserEntity userEntity);
+    User toDomain (UserEntity userEntity);
 
-    UserEntity ToUserEntity (User user);
+    UserEntity toEntity (User user);
+
+    @Mapping(target = "password",ignore = true)
+    void updateEntity(User user, @MappingTarget UserEntity entity);
 
 }

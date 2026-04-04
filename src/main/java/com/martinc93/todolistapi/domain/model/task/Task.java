@@ -1,16 +1,17 @@
 package com.martinc93.todolistapi.domain.model.task;
 
 import com.martinc93.todolistapi.domain.model.task.vo.TaskStatus;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
-@Getter
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
 public class Task {
 
     private Long id;
@@ -49,6 +50,7 @@ public class Task {
 
         return task;
     }
+
     /*
     public void assignToUser(UUID userId){
         if (userId != null){

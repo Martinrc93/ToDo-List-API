@@ -1,4 +1,4 @@
-package com.martinc93.todolistapi.application.ports.in.task;
+package com.martinc93.todolistapi.application.ports.in.task.command;
 
 import com.martinc93.todolistapi.domain.model.task.vo.TaskStatus;
 
