@@ -14,6 +14,7 @@ public interface TaskRepositoryPort {
     Page<Task > findAll(Pageable pageable);
     Page<Task> findByTaskStatus(TaskStatus taskStatus, Pageable pageable);
     Page<Task> findByUpdatedAt(LocalDateTime from, LocalDateTime to,Pageable pageable);
+    Page<Task> findByUserId(Long userId, Pageable pageable);
     void deleteById(Long id);
     Task update(Task task);
 }

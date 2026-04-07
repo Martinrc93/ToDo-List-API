@@ -11,6 +11,7 @@ import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.Crea
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.UpdateTaskRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.response.task.TaskDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.mapper.task.TaskDtoMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,6 +73,13 @@ public class TaskController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/list/user/{userId}")
+    public ResponseEntity<Page<TaskDto>> getByUserId(@PageableDefault(size = 20,page = 0) Pageable pageable,
+                                                     @PathVariable Long userId){
+        Page<TaskDto> response = getTaskUseCase.getByUserId(userId, pageable).map(taskDtoMapper::toDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<TaskDto> create(@RequestBody CreateTaskRequestDto taskRequestDto){
         TaskDto taskDto = taskDtoMapper.toDto(createTaskUseCase.execute(taskDtoMapper.toCommand(taskRequestDto)));
@@ -79,7 +87,7 @@ public class TaskController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Task> update (@RequestBody UpdateTaskRequestDto request){
+    public ResponseEntity<Task> update (@RequestBody @Valid UpdateTaskRequestDto request){
         UpdateTaskCommand command = taskDtoMapper.toCommand(request);
         return ResponseEntity.ok(updateTaskUseCase.exucute(command));
     }

@@ -18,4 +18,6 @@ public interface GetTaskUseCase {
 
     Page<Task> getByUpdatedAt(LocalDate from, LocalDate to, Pageable pageable);
 
+    Page<Task> getByUserId(Long userId, Pageable pageable);
+
 }

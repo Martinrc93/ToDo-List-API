@@ -17,4 +17,8 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
 
     @Query("SELECT t FROM TaskEntity t WHERE t.updatedAt >= :from AND t.updatedAt <= :to")
     Page<TaskEntity> finbByupdatedAt (LocalDateTime from,LocalDateTime to, Pageable pageable);
+
+    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.status != 'DONE'")
+    Page<TaskEntity> findByUserId(Long userId, Pageable pageable);
+
 }

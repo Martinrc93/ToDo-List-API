@@ -55,6 +55,12 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<Task> findByUserId(Long userId, Pageable pageable) {
+        return taskRepository.findByUserId(userId, pageable).map(taskMapper::toDomain);
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id) {
         taskRepository.deleteById(id);

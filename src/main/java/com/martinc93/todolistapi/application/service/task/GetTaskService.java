@@ -44,4 +44,9 @@ public class GetTaskService implements GetTaskUseCase {
 
         return taskRepositoryPort.findByUpdatedAt(fromDate, toDate, pageable);
     }
+
+    @Override
+    public Page<Task> getByUserId(Long userId, Pageable pageable) {
+        return taskRepositoryPort.findByUserId(userId,pageable);
+    }
 }

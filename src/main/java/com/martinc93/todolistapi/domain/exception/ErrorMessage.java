@@ -23,4 +23,12 @@ public class ErrorMessage {
         this.timestamp = LocalDateTime.now();
     }
 
+    public ErrorMessage(String message, int statusCode,Map<String,String> errors){
+        this.message = message;
+        this.statusCode = statusCode;
+        this.errors = errors;
+        this.timestamp = LocalDateTime.now();
+    }
+
+
 }
