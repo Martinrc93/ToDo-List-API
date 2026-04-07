@@ -1,6 +1,7 @@
 package com.martinc93.todolistapi.application.service.user;
 
 import com.martinc93.todolistapi.application.ports.in.user.CreateUserUseCase;
+import com.martinc93.todolistapi.application.ports.in.user.command.CreateUserCommand;
 import com.martinc93.todolistapi.application.ports.out.user.UserRepositoryPort;
 import com.martinc93.todolistapi.domain.model.user.User;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,9 @@ public class CreateUserService implements CreateUserUseCase {
 
     @Override
     @Transactional
-    public User execute(User user) {
+    public User execute(CreateUserCommand command) {
+
+        User user = User.createNewUser(command.userName(), command.email(), command.password());
         return userRepositoryPort.save(user);
     }
 

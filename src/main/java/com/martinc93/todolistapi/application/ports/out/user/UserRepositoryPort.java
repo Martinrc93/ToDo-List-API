@@ -6,8 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-
-public interface UserRepositoryPort {
+public interface                                                                                                                                                        UserRepositoryPort {
 
     User save(User user);
     Optional<User> findByUserName(String userName);

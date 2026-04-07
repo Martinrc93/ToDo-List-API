@@ -6,6 +6,7 @@ import com.martinc93.todolistapi.application.ports.in.task.usecase.GetTaskUseCas
 import com.martinc93.todolistapi.application.ports.in.task.usecase.UpdateTaskUseCase;
 import com.martinc93.todolistapi.application.service.task.CreateTaskService;
 import com.martinc93.todolistapi.domain.model.task.Task;
+import com.martinc93.todolistapi.domain.model.task.vo.TaskStatus;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.CreateTaskRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.task.UpdateTaskRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.response.task.TaskDto;
@@ -14,9 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/tasks")
@@ -31,14 +36,40 @@ public class TaskController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getById(@PathVariable long id){
-        Task task = getTaskUseCase.getById(id);
-        return ResponseEntity.ok(task.toString());
+    public ResponseEntity<TaskDto> getById(@PathVariable Long id){
+        return getTaskUseCase.getById(id)
+                .map(taskDtoMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Page<Task>> getAll(@PageableDefault(size = 10, page = 0) Pageable pageable){
-        return ResponseEntity.ok(getTaskUseCase.getAll(pageable));
+    public ResponseEntity<Page<TaskDto>> getAll(@PageableDefault(size = 10, page = 0) Pageable pageable){
+
+        Page<TaskDto> response = getTaskUseCase.getAll(pageable).map(taskDtoMapper::toDto);
+
+        if (!response.isEmpty()){
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list/{taskStatus}")
+    public ResponseEntity<Page<TaskDto>> getByStatus(@PageableDefault(size = 10, page = 0) Pageable pageable,
+                                                     @PathVariable TaskStatus taskStatus){
+        Page<TaskDto> response = getTaskUseCase.getByStatus(taskStatus, pageable).map(taskDtoMapper::toDto);
+        if (!response.isEmpty()){
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list/updated")
+    public ResponseEntity<Page<TaskDto>> getByUpdatedAt(@PageableDefault(size = 10,page = 0) Pageable pageable,
+                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
+        Page<TaskDto> response = getTaskUseCase.getByUpdatedAt(from, to, pageable).map(taskDtoMapper::toDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/create")

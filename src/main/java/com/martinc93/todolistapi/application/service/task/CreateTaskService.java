@@ -3,7 +3,6 @@ package com.martinc93.todolistapi.application.service.task;
 import com.martinc93.todolistapi.application.ports.in.task.command.CreateTaskCommand;
 import com.martinc93.todolistapi.application.ports.in.task.usecase.CreateTaskUseCase;
 import com.martinc93.todolistapi.application.ports.out.task.TaskRepositoryPort;
-import com.martinc93.todolistapi.application.ports.out.user.UserRepositoryPort;
 import com.martinc93.todolistapi.domain.model.task.Task;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +17,6 @@ public class CreateTaskService implements CreateTaskUseCase {
     @Override
     @Transactional
     public Task execute(CreateTaskCommand command) {
-
-
-        //taskRepositoryPort.findById(command.userId());
 
         Task task = Task.create(
                 command.userId(),

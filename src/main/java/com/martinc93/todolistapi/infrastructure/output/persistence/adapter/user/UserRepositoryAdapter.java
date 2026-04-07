@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findByUserName(String username) {
         return userRepository.findByUserName(username).map(userMapper::toDomain);
     }
@@ -33,17 +33,16 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id).map(userMapper::toDomain);
+    }
+
+    @Override
     @Transactional
     public User save(User user) {
         UserEntity userEntity = userMapper.toEntity(user);
         return userMapper.toDomain(userRepository.save(userEntity));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<User> findById(Long id) {
-        UserEntity entity = userRepository.findById(id).get();
-        return userRepository.findById(id).map(userMapper::toDomain);
     }
 
     @Override
@@ -56,13 +55,9 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     @Transactional
     public User update(User user) {
 
-        UserEntity userEntity = userRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("Not found user witch id : " + user.getId()));
-
+        UserEntity userEntity = new UserEntity();
         userMapper.updateEntity(user, userEntity);
-
         UserEntity updatedEntity = userRepository.save(userEntity);
-
         return userMapper.toDomain(updatedEntity);
     }
 

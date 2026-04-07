@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleAnyException(Exception ex){
 
@@ -20,7 +21,17 @@ public class GlobalExceptionHandler {
                 status.value()
         );
         return new ResponseEntity<>(errorMessage, status);
+    }
 
+    @ExceptionHandler(TaskNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleTaskNotFoundException(TaskNotFoundException ex){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ErrorMessage errorMessage = new ErrorMessage(
+                ex.getMessage(),
+                status.value()
+        );
+        return new ResponseEntity<>(errorMessage, status);
     }
 
 }

@@ -6,10 +6,12 @@ import com.martinc93.todolistapi.application.service.user.DeleteUserService;
 import com.martinc93.todolistapi.application.service.user.GetUserService;
 import com.martinc93.todolistapi.application.service.user.UpdateUserService;
 import com.martinc93.todolistapi.domain.model.user.User;
+import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.user.CreateUserRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.user.UpdateUserRequestDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.request.user.UserDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.dto.response.user.UserReponseDto;
 import com.martinc93.todolistapi.infrastructure.input.rest.mapper.user.UserDtoMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +31,6 @@ public class UserController{
     private final DeleteUserService deleteUserService;
     private final UserDtoMapper userDtoMapper;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<UserReponseDto> findById(@PathVariable Long id){
         return getUserService.get(id)
@@ -38,7 +39,7 @@ public class UserController{
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/username/{username}/")
+    @GetMapping("/{username}")
     public ResponseEntity<UserReponseDto> findByUsername(@PathVariable String username){
         return getUserService.getByUserName(username)
                 .map(userDtoMapper::toDto)
@@ -46,7 +47,7 @@ public class UserController{
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/{email}")
     public ResponseEntity<UserReponseDto> findByEmail(@PathVariable String email) {
         return getUserService.getByEmail(email)
                 .map(userDtoMapper::toDto)
@@ -58,21 +59,18 @@ public class UserController{
     public ResponseEntity<Page<UserReponseDto>> listUsers (@PageableDefault(size = 10, page = 0)
                                                       Pageable pageable){
         Page<UserReponseDto> page = getUserService.list(pageable).map(userDtoMapper::toDto);
-
-        if (page.isEmpty()) return ResponseEntity.noContent().build();
-
         return ResponseEntity.ok(page);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<UserReponseDto> createUser(@RequestBody UserDto userDto){
+    @PostMapping("/")
+    public ResponseEntity<UserReponseDto> createUser(@RequestBody CreateUserRequestDto userDto){
 
-        UserReponseDto userResponse = userDtoMapper.toDto(createUserService.execute(userDtoMapper.toDomain(userDto)));
+        UserReponseDto userResponse = userDtoMapper.toDto(createUserService.execute(userDtoMapper.toCommand(userDto)));
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UserReponseDto> updateUser(@RequestBody UpdateUserRequestDto request) {
+    @PutMapping("/")
+    public ResponseEntity<UserReponseDto> updateUser(@Valid @RequestBody UpdateUserRequestDto request) {
 
         UpdateUserCommand command = userDtoMapper.toCommand(request);
         User updatedUser = updateUserService.execute(command);

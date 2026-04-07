@@ -16,4 +16,5 @@ public interface TaskDtoMapper {
     CreateTaskCommand toCommand(CreateTaskRequestDto taskRequestDto);
 
     UpdateTaskCommand toCommand(UpdateTaskRequestDto taskRequestDto);
+
 }
