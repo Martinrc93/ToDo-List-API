@@ -20,9 +20,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/tasks")
@@ -80,10 +81,19 @@ public class TaskController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<TaskDto> create(@RequestBody CreateTaskRequestDto taskRequestDto){
+
         TaskDto taskDto = taskDtoMapper.toDto(createTaskUseCase.execute(taskDtoMapper.toCommand(taskRequestDto)));
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskDto);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(taskDto.id())
+                .toUri();
+
+        return ResponseEntity.created(location).body(taskDto);
+
     }
 
     @PutMapping("/update")
